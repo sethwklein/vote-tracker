@@ -17,6 +17,27 @@ Council on http://www.portlandmaine.gov/AgendaCenter
 
 ```sh
 npm install
+```
+
+### Local development
+
+To run the database:
+
+```sh
+./run-database.sh
+```
+
+Shut it down with Ctrl+C.
+
+To connect to it with `psql`:
+
+```sh
+./psql.sh
+```
+
+To run the frontend build process:
+
+```sh
 export PATH="$PWD/node_modules/.bin:$PATH"
 gulp watch
 ```
@@ -24,3 +45,5 @@ gulp watch
 ### Files
 
 * See the `config` object in `gulpfile.js` for locations of the frontend files.
+* Database contents is in `db`. You can shut the database down and move that
+    directory aside if you want to start fresh.
