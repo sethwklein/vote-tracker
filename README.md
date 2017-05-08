@@ -18,9 +18,9 @@ Council on http://www.portlandmaine.gov/AgendaCenter
 ```sh
 npm install
 export PATH="$PWD/node_modules/.bin:$PATH"
-gulp
+gulp watch
 ```
 
 ### Files
 
-* `scss/*.scss`: CSS
+* See the `config` object in `gulpfile.js` for locations of the frontend files.
