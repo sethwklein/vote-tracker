@@ -17,4 +17,10 @@ Council on http://www.portlandmaine.gov/AgendaCenter
 
 ```sh
 npm install
+export PATH="$PWD/node_modules/.bin:$PATH"
+gulp
 ```
+
+### Files
+
+* `scss/*.scss`: CSS

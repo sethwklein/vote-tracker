@@ -3,7 +3,10 @@
   "version": "0.0.0",
   "description": "Vote-tracker is a web app for tracking Portland, Maine city council votes.",
   "dependencies": {},
-  "devDependencies": {},
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-sass": "^3.1.0"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
