@@ -9,7 +9,11 @@ Council on http://www.portlandmaine.gov/AgendaCenter
 
 ## Contributing
 
+### Dependencies
+
 * Node v6.10.3 (other versions may work)
+
+### Setup
 
 ```sh
 npm install
