@@ -1,0 +1,25 @@
+{
+  "name": "vote-tracker",
+  "version": "0.0.0",
+  "description": "Vote-tracker is a web app for tracking Portland, Maine city council votes.",
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sethwklein/vote-tracker.git"
+  },
+  "keywords": [
+    "vote",
+    "tracking",
+    "civic"
+  ],
+  "author": "The vote-tracker authors",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sethwklein/vote-tracker/issues"
+  },
+  "homepage": "https://github.com/sethwklein/vote-tracker#readme"
+}
