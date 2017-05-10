@@ -1,3 +1,8 @@
+if (!semver.satisfies(process.version, ">=6")) {
+  console.error("Error: please use Node 6+");
+  process.exit(1);
+}
+
 // Node 6.10.3 doesn't seem to support import. Sorry Airbnb.
 const autoprefixer = require('gulp-autoprefixer');
 const gulp = require('gulp');
