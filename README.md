@@ -32,7 +32,11 @@ To run the database:
 
 Shut it down with Ctrl+C.
 
-To connect to it with `psql`:
+If you have `psql` installed, you can use it to connect just like you would
+to any Postgres running on localhost.
+
+If you don't, use can use `psql` without installing it by running it from
+within Docker using this handy script:
 
 ```sh
 ./psql.sh
