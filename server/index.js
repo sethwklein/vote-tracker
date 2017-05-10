@@ -26,17 +26,26 @@ server.connection({port: port});
 
 server.register(Inert, () => {});
 
-server.route({
-  method: 'GET',
-  path: '/{param*}',
-  handler: {
-    directory: {
-      path: '.',
-      redirectToSlash: true,
-      index: true,
+server.route([
+  {
+    method: 'GET',
+    path: '/{param*}',
+    handler: {
+      directory: {
+        path: '.',
+        redirectToSlash: true,
+        index: true,
+      },
     },
   },
-});
+  {
+    method: 'GET',
+    path: '/ping',
+    handler: function(request, reply) {
+      reply({version: require('../package.json').version});
+    },
+  }
+]);
 
 server.start((err) => {
   if (err) {
