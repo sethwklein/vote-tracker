@@ -11,7 +11,12 @@ const server = new Hapi.Server({
     },
   },
 });
-server.connection({ host: 'localhost', port: 3000 });
+
+var port = process.env.PORT;
+if (!port) {
+  port = 3000
+}
+server.connection({port: port});
 
 server.register(Inert, () => {});
 
