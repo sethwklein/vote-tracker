@@ -4,7 +4,7 @@ const gulp = require('gulp');
 const maps = require('gulp-sourcemaps');
 const named = require('vinyl-named');
 const sass = require('gulp-sass');
-const webpack = require('gulp-webpack');
+const webpack = require('webpack-stream');
 
 const build = './build'; // can't refer to it before it's defined
 
