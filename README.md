@@ -24,6 +24,8 @@ npm install
 
 ### Local development
 
+We don't use `package.json` scripts because JSON doesn't allow comments.
+
 To run the database:
 
 ```sh
@@ -47,6 +49,12 @@ To run the frontend build process:
 ```sh
 export PATH="$PWD/node_modules/.bin:$PATH"
 gulp watch
+```
+
+To run the server:
+
+```sh
+node server
 ```
 
 ### Files

@@ -24,9 +24,6 @@
     "webpack": "^2.5.1",
     "webpack-stream": "^3.2.0"
   },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/sethwklein/vote-tracker.git"
