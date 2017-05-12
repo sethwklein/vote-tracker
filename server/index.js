@@ -2,6 +2,7 @@ const Path = require('path');
 const Hapi = require('hapi');
 const Inert = require('inert');
 const semver = require('semver');
+const pg = require('hapi-node-postgres');
 
 if (!semver.satisfies(process.version, ">=6")) {
   console.error("Error: please use Node 6+");
@@ -24,33 +25,59 @@ if (!port) {
 }
 server.connection({port: port});
 
-server.register(Inert, () => {});
+var start = function() {
+  plugins();
+};
 
-server.route([
-  {
-    method: 'GET',
-    path: '/{param*}',
-    handler: {
-      directory: {
-        path: '.',
-        redirectToSlash: true,
-        index: true,
+var plugins = function() {
+  server.register([
+    // inert
+    Inert,
+    // postgres
+    {
+      register: pg,
+      options: {
+        connectionString: 'postgres://postgres@localhost/postgres',
+        native: process.env.NODE_ENV == "production",
       },
     },
-  },
-  {
-    method: 'GET',
-    path: '/ping',
-    handler: function(request, reply) {
-      reply({version: require('../package.json').version});
-    },
-  }
-]);
+  ], routes);
+};
 
-server.start((err) => {
+var routes = function(err) {
+  if (err) {
+    throw err;
+  }
+
+  server.route([
+    {
+      method: 'GET',
+      path: '/{param*}',
+      handler: {
+        directory: {
+          path: '.',
+          redirectToSlash: true,
+          index: true,
+        },
+      },
+    },
+    {
+      method: 'GET',
+      path: '/ping',
+      handler: function(request, reply) {
+        reply({version: require('../package.json').version});
+      },
+    },
+  ]);
+  server.start(report);
+};
+
+var report = function(err) {
   if (err) {
     throw err;
   }
 
   console.log('Server running at:', server.info.uri);
-});
+};
+
+start();

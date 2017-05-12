@@ -64,3 +64,11 @@ node server
 * Database contents is in `db`. You can shut the database down and move that
     directory aside to start fresh.
 
+### Database
+
+The database is Postgres. The API uses [`hapi-node-postgres`](https://github.com/jedireza/hapi-node-postgres)
+(which uses [`node-postgres`](https://github.com/brianc/node-postgres)
+([`pg`](https://www.npmjs.com/package/pg))) directly. No ORM is in use.
+
+> If you ever include any variable in the first argument to `request.pg.query`,
+> also include a half page comment on why the right way wouldn't work that time.

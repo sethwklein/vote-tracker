@@ -4,8 +4,10 @@
   "description": "Vote-tracker is a web app for tracking Portland, Maine city council votes.",
   "dependencies": {
     "hapi": "^16.1.1",
+    "hapi-node-postgres": "^4.1.0",
     "inert": "^4.2.0",
     "path": "^0.12.7",
+    "pg": "^6.1.5",
     "semver": "^5.3.0"
   },
   "devDependencies": {
