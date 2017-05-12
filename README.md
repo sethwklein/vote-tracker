@@ -29,7 +29,7 @@ We don't use `package.json` scripts because JSON doesn't allow comments.
 To run the database:
 
 ```sh
-./run-database.sh
+./database.sh
 ```
 
 Shut it down with Ctrl+C.
