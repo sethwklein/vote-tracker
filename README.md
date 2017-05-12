@@ -62,4 +62,5 @@ node server
 
 * See the `config` object in `gulpfile.js` for locations of the frontend files.
 * Database contents is in `db`. You can shut the database down and move that
-    directory aside if you want to start fresh.
+    directory aside to start fresh.
+
