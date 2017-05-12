@@ -1,12 +1,12 @@
-if (!semver.satisfies(process.version, ">=6")) {
-  console.error("Error: please use Node 6+");
-  process.exit(1);
-}
-
 const Path = require('path');
 const Hapi = require('hapi');
 const Inert = require('inert');
 const semver = require('semver');
+
+if (!semver.satisfies(process.version, ">=6")) {
+  console.error("Error: please use Node 6+");
+  process.exit(1);
+}
 
 const server = new Hapi.Server({
   connections: {

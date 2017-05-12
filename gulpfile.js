@@ -1,8 +1,3 @@
-if (!semver.satisfies(process.version, ">=6")) {
-  console.error("Error: please use Node 6+");
-  process.exit(1);
-}
-
 // Node 6.10.3 doesn't seem to support import. Sorry Airbnb.
 const autoprefixer = require('gulp-autoprefixer');
 const gulp = require('gulp');
@@ -10,6 +5,12 @@ const maps = require('gulp-sourcemaps');
 const named = require('vinyl-named');
 const sass = require('gulp-sass');
 const webpack = require('webpack-stream');
+const semver = require('semver');
+
+if (!semver.satisfies(process.version, ">=6")) {
+  console.error("Error: please use Node 6+");
+  process.exit(1);
+}
 
 const build = './build'; // can't refer to it before it's defined
 
