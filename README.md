@@ -14,7 +14,8 @@ listed under City Council on http://www.portlandmaine.gov/DocumentCenter
 
 ### Dependencies
 
-* Node v6.10.3 (other versions may work)
+* [Node v6.10.3 (other versions may work)](https://github.com/creationix/nvm)
+* [Docker](https://www.docker.com/docker-mac)
 
 ### Setup
 
