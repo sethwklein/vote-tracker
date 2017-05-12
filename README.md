@@ -1,6 +1,6 @@
-# vote-tracker
+# voting-record
 
-Vote-tracker is a web app for tracking Portland, Maine city council votes.
+Voting-record is a web app for tracking Portland, Maine city council votes.
 
 ## Data sources
 
