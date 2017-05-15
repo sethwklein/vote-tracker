@@ -48,7 +48,9 @@ within Docker using this handy script:
 To run the frontend build process:
 
 ```sh
+# if you don't have gulp installed globally
 export PATH="$PWD/node_modules/.bin:$PATH"
+
 gulp watch
 ```
 
