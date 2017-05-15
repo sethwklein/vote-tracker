@@ -4,6 +4,8 @@ const Path = require('path');
 const pg = require('hapi-node-postgres');
 const semver = require('semver');
 
+const scrapeCouncilors = require('../shared/scrape-councilors');
+
 if (!semver.satisfies(process.version, ">=6")) {
   console.error("Error: please use Node 6+");
   process.exit(1);
@@ -71,6 +73,29 @@ var routes = function(err) {
       path: '/ping',
       handler: function(req, reply) {
         reply({version: require('../package.json').version});
+      },
+    },
+    {
+      method: 'GET',
+      path: '/scrape',
+      handler: function(req, reply) {
+        var start = function() {
+          getCouncilors();
+        };
+
+        var getCouncilors = function() {
+          scrapeCouncilors(sendCouncilors);
+        };
+
+        var sendCouncilors = function(err, councilors) {
+          if (err) {
+            return reply({error: err});
+          }
+
+          return reply(councilors);
+        };
+
+        start();
       },
     },
   ]);
