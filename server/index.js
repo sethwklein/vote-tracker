@@ -17,6 +17,9 @@ const server = new Hapi.Server({
       },
     },
   },
+  debug: {
+    request: ['error']
+  },
 });
 
 var port = process.env.PORT;
