@@ -1,8 +1,8 @@
-const Path = require('path');
 const Hapi = require('hapi');
 const Inert = require('inert');
-const semver = require('semver');
+const Path = require('path');
 const pg = require('hapi-node-postgres');
+const semver = require('semver');
 
 if (!semver.satisfies(process.version, ">=6")) {
   console.error("Error: please use Node 6+");
