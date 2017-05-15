@@ -66,9 +66,15 @@ node server
 
 ### Database
 
-The database is Postgres. The API uses [`hapi-node-postgres`](https://github.com/jedireza/hapi-node-postgres)
-(which uses [`node-postgres`](https://github.com/brianc/node-postgres)
-([`pg`](https://www.npmjs.com/package/pg))) directly. No ORM is in use.
+* The database is Postgres.
+* The API uses [`hapi-node-postgres`](https://github.com/jedireza/hapi-node-postgres)
+    (which uses [`node-postgres`](https://github.com/brianc/node-postgres)
+    ([`pg`](https://www.npmjs.com/package/pg))) directly.
+* No ORM is in use. This probably makes development slower, but gives us
+    less to learn and eliminates the likelihood of losing time to ORM
+    limitations later.
+* Eventually, we'll want a database migrations tool. There's a Trello card
+    tagged technical debt for adopting one.
 
 > If you ever include any variable in the first argument to `request.pg.query`,
 > also include a half page comment on why the right way wouldn't work that time.
