@@ -1,8 +1,8 @@
-const Path = require('path');
 const Hapi = require('hapi');
 const Inert = require('inert');
-const semver = require('semver');
+const Path = require('path');
 const pg = require('hapi-node-postgres');
+const semver = require('semver');
 
 if (!semver.satisfies(process.version, ">=6")) {
   console.error("Error: please use Node 6+");
@@ -26,7 +26,9 @@ var port = process.env.PORT;
 if (!port) {
   port = 3000
 }
-server.connection({port: port});
+server.connection({
+  port: port,
+});
 
 var start = function() {
   plugins();
@@ -67,7 +69,7 @@ var routes = function(err) {
     {
       method: 'GET',
       path: '/ping',
-      handler: function(request, reply) {
+      handler: function(req, reply) {
         reply({version: require('../package.json').version});
       },
     },
