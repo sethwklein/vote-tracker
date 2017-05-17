@@ -1,0 +1,70 @@
+// Style for the order card
+
+.order {
+
+  flex: 1 300px;
+  margin: 10px;
+  box-shadow: 2px 2px 2px rgba(0,0,0,.2);
+  // This border radius affects the shadow.
+  border-radius: 5px;
+
+  // Display the order flex
+  // (So we can stretch body to keep the box shadow consistent)
+  display: flex;
+  flex-direction: column;
+
+  &__container {
+    padding: 0 10px 0;
+  }
+  &__header {
+    background: $blue;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    border-radius: 5px 5px 0 0;
+  }
+  &__body {
+    background: white;
+    padding: 10px 0;
+
+    // Helps keep cards looking consistent with variable text
+    flex-grow: 1;
+  }
+  &__title {
+    color: white;
+    font-weight: 400;
+    font-size: 18px
+  }
+  &__results {
+    height: 10px;
+    background: lighten($blue, 20%);
+    border-radius: 0 0 5px 5px;
+  }
+
+  &:first-child{
+    .order__results {
+      background-image: linear-gradient(90deg, $green 66%, $red 66%, $red 75%, $grey 75%, $grey 100%);
+    }
+  }
+  &:nth-child(3) {
+    .order__results {
+      background: $green;
+    }
+  }
+  &:nth-child(4) {
+    .order__results {
+      background-image: linear-gradient(90deg, $red 89%, $green 89%, $green 100%);
+    }
+  }
+}
+
+// Style for the group of orders
+
+.orders {
+  display: flex;
+  flex-wrap: wrap;
+
+  // account for .order margin
+  margin-left: -10px;
+  margin-right: -10px;
+}

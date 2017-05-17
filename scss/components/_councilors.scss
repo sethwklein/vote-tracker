@@ -1,0 +1,27 @@
+.councilors {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 -10px;
+}
+
+.councilor {
+  display: flex;
+  margin: 10px;
+  align-items: center;
+
+  &__name {
+    font-weight: 600;
+  }
+
+  &__photo {
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  &__details {
+    margin-left: 10px;
+  }
+}
