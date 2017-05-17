@@ -59,7 +59,14 @@ var routes = function(err) {
   server.route([
     {
       method: 'GET',
-      path: '/{param*}',
+      path: '/',
+      handler: function(req, reply) {
+        reply.file('../build/index.html');
+      },
+    },
+    {
+      method: 'GET',
+      path: '/static/{param*}',
       handler: {
         directory: {
           path: '.',
