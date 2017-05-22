@@ -48,10 +48,11 @@ var scrapeCouncilor = function(id, callback) {
     var imgURL = $('.BioText > img').attr('src');
 
     callback(null, {
+      cityCMSID: id,
       name: name,
       role: role,
-      img: cityURL + imgURL,
-      cityCMSID: id,
+      cityPage: cityURL,
+      // img: cityURL + imgURL,
     });
   };
 

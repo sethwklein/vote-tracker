@@ -98,9 +98,9 @@ var routes = function(err) {
 
         var get = function() {
           if (typeof name === 'undefined') {
-            return req.pg.client.query('SELECT name, role FROM councilors', send);
+            return req.pg.client.query('SELECT name, role, cityPage FROM councilors', send);
           } else {
-            return req.pg.client.query('SELECT name, role FROM councilors WHERE name = $1', [name], send);
+            return req.pg.client.query('SELECT name, role, cityPage FROM councilors WHERE name = $1', [name], send);
           }
         };
 
@@ -169,7 +169,7 @@ var routes = function(err) {
 
             councilor = councilorArgument;
 
-            req.pg.client.query('UPDATE councilors SET name = $1, role = $2, imgURL = $3 WHERE cityCMSID = $4', [councilor.name, councilor.role, councilor.img, councilor.cityCMSID], insertCouncilor);
+            req.pg.client.query('UPDATE councilors SET name = $1, role = $2, cityPage = $3 WHERE cityCMSID = $4', [councilor.name, councilor.role, councilor.cityPage, councilor.cityCMSID], insertCouncilor);
           };
 
           var insertCouncilor = function(err, result) {
@@ -181,7 +181,7 @@ var routes = function(err) {
               return finishDatabase(null, result);
             }
 
-            req.pg.client.query('INSERT INTO councilors (name, role, imgURL, cityCMSID) VALUES ($1, $2, $3, $4)', [councilor.name, councilor.role, councilor.img, councilor.cityCMSID], finishDatabase);
+            req.pg.client.query('INSERT INTO councilors (name, cityCMSID, role, cityPage) VALUES ($1, $2, $3, $4)', [councilor.name, councilor.cityCMSID, councilor.role, councilor.cityPage], finishDatabase);
           };
 
           var finishDatabase = function(err, result) {
