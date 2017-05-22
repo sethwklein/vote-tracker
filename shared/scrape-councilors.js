@@ -1,3 +1,4 @@
+const Boom = require('boom');
 const async = require('async');
 const cheerio = require('cheerio');
 const request = require('request');
@@ -19,15 +20,11 @@ var scrapeCouncilor = function(id, callback) {
 
   var extract = function(err, response, body) {
     if (err) {
-      // improve
-      console.log('councilor request error');
-      return callback({error: err});
+      return callback(err);
     }
 
     if (response.statusCode != 200) {
-      // improve
-      console.log('councilor request bad status');
-      return callback({code: response.statusCode});
+      return callback(Boom.create(response.statusCode, "councilor fetch failed"));
     }
 
     var $ = cheerio.load(response.body);
@@ -72,20 +69,11 @@ var scrapeCouncilorList = function(callback) {
 
   var extractIDS = function(err, response, body) {
     if (err) {
-      // annotate with error source?
-      // console.log('ids request error');
       return callback(err);
     }
 
     if (response.statusCode != 200) {
-      // this throws out information. i'd like to see it return the code in
-      // machine readable state. maybe make a custom error type.
-      // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error#Custom_Error_Types
-      // i feel like i shouldn't have to do this. why can't i get a function
-      // like request that considers any non-200 a failure?
-      // --sk
-      // console.log('ids request bad status');
-      return callback(new Error("unsuccessful response from server: "+response.statusCode));
+      return callback(Boom.create(response.statusCode, "councilor list fetch failed"));
     }
 
     var $ = cheerio.load(response.body);

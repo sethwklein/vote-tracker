@@ -3,6 +3,7 @@ if (!require('semver').satisfies(process.version, ">=6")) {
   process.exit(1);
 }
 
+const Boom = require('boom');
 const Hapi = require('hapi');
 const Inert = require('inert');
 const Path = require('path');
@@ -99,7 +100,7 @@ var routes = function(err) {
 
         var getAndStoreCouncilors = function(err, cityCMSIDS) {
           if (err) {
-            return reply({error: err});
+            return reply(Boom.wrap(err));
           }
 
           async.map(cityCMSIDS, async.reflect(getAndStoreCouncilor), sendReport);
@@ -121,7 +122,7 @@ var routes = function(err) {
 
           var updateCouncilor = function(err, councilorArgument) {
             if (err) {
-              return callback(err);
+              return callback(Boom.wrap(err));
             }
 
             councilor = councilorArgument;
@@ -131,7 +132,7 @@ var routes = function(err) {
 
           var insertCouncilor = function(err, result) {
             if (err) {
-              return callback(err);
+              return callback(Boom.serverUnavailable(err));
             }
 
             if (result.rowCount > 0) {
@@ -142,7 +143,11 @@ var routes = function(err) {
           };
 
           var finishDatabase = function(err, result) {
-            return callback(err, {
+            if (err) {
+              return callback(Boom.serverUnavailable(err));
+            }
+
+            return callback(null, {
                 command: result.command,
                 rowCount: result.rowCount,
                 name: councilor.name,
