@@ -1,8 +1,10 @@
-const Path = require('path');
 const Hapi = require('hapi');
 const Inert = require('inert');
-const semver = require('semver');
+const Path = require('path');
 const pg = require('hapi-node-postgres');
+const semver = require('semver');
+
+const scrapeCouncilors = require('../shared/scrape-councilors');
 
 if (!semver.satisfies(process.version, ">=6")) {
   console.error("Error: please use Node 6+");
@@ -26,7 +28,9 @@ var port = process.env.PORT;
 if (!port) {
   port = 3000
 }
-server.connection({port: port});
+server.connection({
+  port: port,
+});
 
 var start = function() {
   plugins();
@@ -55,7 +59,14 @@ var routes = function(err) {
   server.route([
     {
       method: 'GET',
-      path: '/{param*}',
+      path: '/',
+      handler: function(req, reply) {
+        reply.file('../build/index.html');
+      },
+    },
+    {
+      method: 'GET',
+      path: '/static/{param*}',
       handler: {
         directory: {
           path: '.',
@@ -67,8 +78,31 @@ var routes = function(err) {
     {
       method: 'GET',
       path: '/ping',
-      handler: function(request, reply) {
+      handler: function(req, reply) {
         reply({version: require('../package.json').version});
+      },
+    },
+    {
+      method: 'GET',
+      path: '/scrape',
+      handler: function(req, reply) {
+        var start = function() {
+          getCouncilors();
+        };
+
+        var getCouncilors = function() {
+          scrapeCouncilors(sendCouncilors);
+        };
+
+        var sendCouncilors = function(err, councilors) {
+          if (err) {
+            return reply({error: err});
+          }
+
+          return reply(councilors);
+        };
+
+        start();
       },
     },
   ]);
