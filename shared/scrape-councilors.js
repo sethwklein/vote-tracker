@@ -2,9 +2,9 @@ const async = require('async');
 const cheerio = require('cheerio');
 const request = require('request');
 
-const cityUrl = 'http://www.portlandmaine.gov';
-const directoryUrl = cityUrl + '/Directory.aspx?did=11';
-const councilorUrl = cityUrl + '/directory.aspx?EID=';
+const cityURL = 'http://www.portlandmaine.gov';
+const directoryURL = cityURL + '/Directory.aspx?did=11';
+const councilorURL = cityURL + '/directory.aspx?EID=';
 
 const titleLabel = 'Title: ';
 
@@ -14,7 +14,7 @@ var scrapeCouncilor = function(id, callback) {
   };
 
   var get = function() {
-    request(councilorUrl+id, extract);
+    request(councilorURL+id, extract);
   };
 
   var extract = function(err, response, body) {
@@ -48,9 +48,14 @@ var scrapeCouncilor = function(id, callback) {
       role = s.slice(titleLabel.length);
     }
 
-    var imgUrl = $('.BioText > img').attr('src');
+    var imgURL = $('.BioText > img').attr('src');
 
-    callback(null, {name: name, role: role, img: cityUrl + imgUrl});
+    callback(null, {
+      name: name,
+      role: role,
+      img: cityURL + imgURL,
+      cityCMSID: id,
+    });
   };
 
   start();
@@ -62,10 +67,10 @@ module.exports = function(callback) {
   };
 
   var getDirectory = function() {
-    request(directoryUrl, extractIds);
+    request(directoryURL, extractIDS);
   };
 
-  var extractIds = function(err, response, body) {
+  var extractIDS = function(err, response, body) {
     if (err) {
       // annotate with error source?
       // console.log('ids request error');

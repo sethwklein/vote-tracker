@@ -39,7 +39,7 @@ If you have `psql` installed, you can use it to connect just like you would
 to any Postgres running on localhost.
 
 If you don't, you can use `psql` without installing it by running it from
-within Docker using this handy script:
+within Docker using this script:
 
 ```sh
 ./psql.sh
