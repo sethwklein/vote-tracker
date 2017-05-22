@@ -35,6 +35,16 @@ To run the database:
 
 You can shut it down with Ctrl+C.
 
+To initialize the database:
+
+```
+./sql.sh sql/encoding.sql
+# DID THAT SAY UTF8? IF NOT, GET IT FIXED!
+./sql.sh sql/councilors.sql
+```
+
+To run database commands manually....
+
 If you have `psql` installed, you can use it to connect just like you would
 to any Postgres running on localhost.
 
