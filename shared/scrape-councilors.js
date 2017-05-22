@@ -61,7 +61,7 @@ var scrapeCouncilor = function(id, callback) {
   start();
 };
 
-module.exports = function(callback) {
+var scrapeCouncilorList = function(callback) {
   var start = function() {
     getDirectory();
   };
@@ -94,20 +94,13 @@ module.exports = function(callback) {
       .map(function(){return $(this).attr('href').split('=')[1]})
       .get();
 
-    // for testing, just 1:
-    // async.map([ids[0]], scrapeCouncilor, replyCouncilors);
-    async.map(ids, scrapeCouncilor, replyCouncilors);
-  };
-
-  var replyCouncilors = function(err, councilors) {
-    if (err) {
-      // annotate with error source?
-      // console.log('sending councilor request error');
-      return callback(err);
-    }
-
-    return callback(null, councilors);
+    callback(null, ids);
   };
 
   start();
+};
+
+module.exports = {
+  scrapeCouncilor: scrapeCouncilor,
+  scrapeCouncilorList: scrapeCouncilorList,
 };

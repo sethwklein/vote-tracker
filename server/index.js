@@ -6,9 +6,10 @@ if (!require('semver').satisfies(process.version, ">=6")) {
 const Hapi = require('hapi');
 const Inert = require('inert');
 const Path = require('path');
+const async = require('async');
 const pg = require('hapi-node-postgres');
 
-const scrapeCouncilors = require('../shared/scrape-councilors');
+const councilorScraper = require('../shared/scrape-councilors');
 
 const server = new Hapi.Server({
   connections: {
@@ -86,19 +87,78 @@ var routes = function(err) {
       path: '/scrape',
       handler: function(req, reply) {
         var start = function() {
-          getCouncilors();
+          getCouncilorList();
         };
 
-        var getCouncilors = function() {
-          scrapeCouncilors(sendCouncilors);
+        var getCouncilorList = function() {
+          councilorScraper.scrapeCouncilorList(getAndStoreCouncilors);
         };
 
-        var sendCouncilors = function(err, councilors) {
+        // Try every councilor, reporting the ones that fail, but not
+        // aborting other councilor attempts if one fails.
+
+        var getAndStoreCouncilors = function(err, cityCMSIDS) {
           if (err) {
             return reply({error: err});
           }
 
-          return reply(councilors);
+          async.map(cityCMSIDS, async.reflect(getAndStoreCouncilor), sendReport);
+        };
+
+        var getAndStoreCouncilor = function(cityCMSID, callback) {
+          var start = function() {
+            scrapeCouncilor();
+          };
+
+          var scrapeCouncilor = function() {
+            councilorScraper.scrapeCouncilor(cityCMSID, updateCouncilor);
+          };
+
+          var councilor;
+
+          // Try an update, then an insert. It's less robust against
+          // parallelism, but fewer database requests in the common case.
+
+          var updateCouncilor = function(err, councilorArgument) {
+            if (err) {
+              return callback(err);
+            }
+
+            councilor = councilorArgument;
+
+            req.pg.client.query('UPDATE councilors SET name = $1, role = $2, imgURL = $3 WHERE cityCMSID = $4', [councilor.name, councilor.role, councilor.img, councilor.cityCMSID], insertCouncilor);
+          };
+
+          var insertCouncilor = function(err, result) {
+            if (err) {
+              return callback(err);
+            }
+
+            if (result.rowCount > 0) {
+              return finishDatabase(null, result);
+            }
+
+            req.pg.client.query('INSERT INTO councilors (name, role, imgURL, cityCMSID) VALUES ($1, $2, $3, $4)', [councilor.name, councilor.role, councilor.img, councilor.cityCMSID], finishDatabase);
+          };
+
+          var finishDatabase = function(err, result) {
+            return callback(err, {
+                command: result.command,
+                rowCount: result.rowCount,
+                name: councilor.name,
+                cityCMSID: councilor.cityCMSID,
+              });
+          };
+
+          start();
+        };
+
+        var sendReport = function(err, report) {
+          if (err) {
+            return reply({error: err});
+          }
+
+          return reply(report);
         };
 
         start();
