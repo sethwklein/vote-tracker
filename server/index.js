@@ -85,6 +85,48 @@ var routes = function(err) {
     },
     {
       method: 'GET',
+      path: '/api/v1/councilor/{name?}',
+      handler: function(req, reply) {
+        var name = req.params.name;
+        if (name === "") {
+          name = undefined;
+        }
+
+        var start = function() {
+          return get();
+        };
+
+        var get = function() {
+          if (typeof name === 'undefined') {
+            return req.pg.client.query('SELECT name, role FROM councilors', send);
+          } else {
+            return req.pg.client.query('SELECT name, role FROM councilors WHERE name = $1', [name], send);
+          }
+        };
+
+        var send = function(err, result) {
+          if (err) {
+            return reply(Boom.serverUnavailable(err));
+          }
+
+          if (typeof name === 'undefined') {
+            return reply(result.rows);
+          }
+
+          if (result.rows.length < 1) {
+            return reply(Boom.notFound());
+          }
+
+          // is fussing about too many rows worth it?
+
+          return reply(result.rows[0]);
+        };
+
+        return start();
+      },
+    },
+    {
+      method: 'GET',
       path: '/scrape',
       handler: function(req, reply) {
         var start = function() {
