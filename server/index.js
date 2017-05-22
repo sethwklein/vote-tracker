@@ -62,7 +62,7 @@ var routes = function(err) {
       method: 'GET',
       path: '/',
       handler: function(req, reply) {
-        reply.file('../build/index.html');
+        return reply.file('../build/index.html');
       },
     },
     {
@@ -80,7 +80,7 @@ var routes = function(err) {
       method: 'GET',
       path: '/ping',
       handler: function(req, reply) {
-        reply({version: require('../package.json').version});
+        return reply({version: require('../package.json').version});
       },
     },
     {
