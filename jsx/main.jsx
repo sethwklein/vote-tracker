@@ -97,7 +97,7 @@ function Application() {
           <div className="section__body">
             <div className="councilors">
               <div className="councilor">
-                <div className="councilor__photo"><img src="pious-placeholder.jpg" alt=""/></div>
+                <div className="councilor__photo"><img src="static/pious-placeholder.jpg" alt=""/></div>
                 <div className="councilor__details">
                   <div className="councilor__name">Pious Ali</div>
                   <div className="councilor__title">At-Large</div>
@@ -106,7 +106,7 @@ function Application() {
 
 
               <div className="councilor">
-                <div className="councilor__photo"><img src="pious-placeholder.jpg" alt=""/></div>
+                <div className="councilor__photo"><img src="static/pious-placeholder.jpg" alt=""/></div>
                 <div className="councilor__details">
                   <div className="councilor__name">Pious Ali</div>
                   <div className="councilor__title">At-Large</div>
@@ -114,7 +114,7 @@ function Application() {
               </div>
 
               <div className="councilor">
-                <div className="councilor__photo"><img src="pious-placeholder.jpg" alt=""/></div>
+                <div className="councilor__photo"><img src="static/pious-placeholder.jpg" alt=""/></div>
                 <div className="councilor__details">
                   <div className="councilor__name">Pious Ali</div>
                   <div className="councilor__title">At-Large</div>
@@ -122,7 +122,7 @@ function Application() {
               </div>
 
               <div className="councilor">
-                <div className="councilor__photo"><img src="pious-placeholder.jpg" alt=""/></div>
+                <div className="councilor__photo"><img src="/static/pious-placeholder.jpg" alt=""/></div>
                 <div className="councilor__details">
                   <div className="councilor__name">Pious Ali</div>
                   <div className="councilor__title">At-Large</div>
@@ -130,7 +130,7 @@ function Application() {
               </div>
 
               <div className="councilor">
-                <div className="councilor__photo"><img src="pious-placeholder.jpg" alt=""/></div>
+                <div className="councilor__photo"><img src="static/pious-placeholder.jpg" alt=""/></div>
                 <div className="councilor__details">
                   <div className="councilor__name">Pious Ali</div>
                   <div className="councilor__title">At-Large</div>
