@@ -3,22 +3,17 @@ if (!require('semver').satisfies(process.version, ">=6")) {
   process.exit(1);
 }
 
-const Boom = require('boom');
 const Hapi = require('hapi');
 const Inert = require('inert');
-const Path = require('path');
-const async = require('async');
 const fs = require('fs');
 const path = require('path');
 const pg = require('hapi-node-postgres');
-
-const councilorScraper = require('../shared/scrape-councilors');
 
 const server = new Hapi.Server({
   connections: {
     routes: {
       files: {
-        relativeTo: Path.join(__dirname, '../build'),
+        relativeTo: path.join(__dirname, '../build'),
       },
     },
   },

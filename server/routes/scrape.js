@@ -1,3 +1,8 @@
+const Boom = require('boom');
+const async = require('async');
+
+const councilorScraper = require('../../shared/scrape-councilors');
+
 module.exports = {
   method: 'GET',
   path: '/scrape',

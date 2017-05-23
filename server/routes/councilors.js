@@ -1,3 +1,5 @@
+const Boom = require('boom');
+
 module.exports = {
   method: 'GET',
   path: '/api/v1/councilors/{name?}',
