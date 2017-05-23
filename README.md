@@ -28,13 +28,13 @@ npm install
 
 We don't use `package.json` scripts because JSON doesn't allow comments.
 
-To run the database:
+To run the development servers (Postgres):
 
 ```sh
-./database.sh
+docker-compose up
 ```
 
-You can shut it down with Ctrl+C.
+You can shut them down with Ctrl+C.
 
 To initialize the database:
 

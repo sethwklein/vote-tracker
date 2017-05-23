@@ -1,0 +1,11 @@
+version: "3"
+services:
+
+  postgres:
+    image: postgres:9.6.2
+    volumes:
+      - ./db:/var/lib/postgresql/data
+    ports:
+      - 127.0.0.1:5432:5432
+    # there's no state in this container so it could be deleted every
+    # time, but docker compose doesn't support that.

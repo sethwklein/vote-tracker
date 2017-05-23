@@ -16,7 +16,9 @@ case $1 in
     ;;
 esac
 
-exec docker run --rm --link vote-tracker-postgres:postgres \
+exec docker run --rm \
+    --network votingrecord_default \
+    --link votingrecord_postgres_1:postgres \
     -v "$external_name:$internal_name" \
     postgres \
     psql -h postgres -U postgres -f "$internal_name"
