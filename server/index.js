@@ -117,8 +117,6 @@ var routes = function(err) {
             return reply(Boom.notFound());
           }
 
-          // is fussing about too many rows worth it?
-
           return reply(result.rows[0]);
         };
 
