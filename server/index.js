@@ -64,8 +64,8 @@ var routes = function(err) {
     }
     routes.push(require(path.join(routesDir, fn)));
   });
-
   server.route(routes);
+
   server.start(report);
 };
 
