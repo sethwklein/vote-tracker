@@ -13,12 +13,13 @@ function Application(props) {
   return (
     <div>
       <Router>
-      <div>
-      <Header page="homepage" title="Portland Maine Voting&nbsp;Record" />
-
-      <Route exact path="/" component={Home} />
-      <Route path="/councilor/:cid" component={CouncilorDetail} />
-      <Footer />
+      <div className="site">
+        <Header page="homepage" title="Portland Maine Voting&nbsp;Record" />
+        <div className="main">
+          <Route exact path="/" component={Home} />
+          <Route path="/councilor/:cid" component={CouncilorDetail} />
+        </div>
+        <Footer />
       </div>
       </Router>
     </div>

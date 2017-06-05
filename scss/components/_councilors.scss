@@ -8,7 +8,16 @@
   display: flex;
   margin: 10px;
   align-items: center;
-  flex: 1 200px;
+
+  &__link {
+    flex: 1 200px;
+    text-decoration: none;
+
+    &:hover {
+      background: #cdddff;
+      border-radius: 5px;
+    }
+  }
 
   &__name {
     font-weight: 600;

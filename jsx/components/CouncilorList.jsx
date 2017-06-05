@@ -31,7 +31,7 @@ const CouncilorList = props => {
 });
 
   var councilorComponents = councilors.map((councilor) => (
-    <Link to={`/councilor/${councilor.name}`} key={councilor.name}>
+    <Link to={`/councilor/${councilor.name}`} key={councilor.name} className="councilor__link">
       <Councilor
         name={councilor.name}
         role={councilor.role}
