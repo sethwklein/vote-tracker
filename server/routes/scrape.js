@@ -1,3 +1,8 @@
+const Boom = require('boom');
+const async = require('async');
+
+const councilorScraper = require('../../shared/scrape-councilors');
+
 module.exports = {
   method: 'GET',
   path: '/scrape',
@@ -42,7 +47,7 @@ module.exports = {
 
         councilor = councilorArgument;
 
-        req.pg.client.query('UPDATE councilors SET name = $1, role = $2, cityPage = $3 WHERE cityCMSID = $4', [councilor.name, councilor.role, councilor.cityPage, councilor.cityCMSID], insertCouncilor);
+        req.pg.client.query('UPDATE councilors SET name = $1, role = $2, cityPage = $3, img = $4 WHERE cityCMSID = $5', [councilor.name, councilor.role, councilor.cityPage, councilor.img, councilor.cityCMSID], insertCouncilor);
       };
 
       var insertCouncilor = function(err, result) {
@@ -54,7 +59,7 @@ module.exports = {
           return finishDatabase(null, result);
         }
 
-        req.pg.client.query('INSERT INTO councilors (name, cityCMSID, role, cityPage) VALUES ($1, $2, $3, $4)', [councilor.name, councilor.cityCMSID, councilor.role, councilor.cityPage], finishDatabase);
+        req.pg.client.query('INSERT INTO councilors (name, cityCMSID, role, cityPage, img) VALUES ($1, $2, $3, $4, $5)', [councilor.name, councilor.cityCMSID, councilor.role, councilor.cityPage, councilor.img], finishDatabase);
       };
 
       var finishDatabase = function(err, result) {

@@ -1,3 +1,5 @@
+const Boom = require('boom');
+
 module.exports = {
   method: 'GET',
   path: '/api/v1/councilors/{name?}',
@@ -13,9 +15,9 @@ module.exports = {
 
     var get = function() {
       if (typeof name === 'undefined') {
-        return req.pg.client.query('SELECT name, role, cityPage FROM councilors', send);
+        return req.pg.client.query('SELECT name, role, cityPage, img FROM councilors', send);
       } else {
-        return req.pg.client.query('SELECT name, role, cityPage FROM councilors WHERE name = $1', [name], send);
+        return req.pg.client.query('SELECT name, role, cityPage, img FROM councilors WHERE name = $1', [name], send);
       }
     };
 
