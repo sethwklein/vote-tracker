@@ -51,8 +51,8 @@ var scrapeCouncilor = function(id, callback) {
       cityCMSID: id,
       name: name,
       role: role,
-      cityPage: cityURL,
-      // img: cityURL + imgURL,
+      cityPage: councilorURL+id,
+      img: cityURL + imgURL,
     });
   };
 

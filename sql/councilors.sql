@@ -4,7 +4,7 @@ CREATE TABLE councilors (
     cityCMSID text UNIQUE,
     name text,
     role text,
-    cityPage text
-    -- imgURL text,
+    cityPage text,
+    img text
     -- imgData bytea,
 );

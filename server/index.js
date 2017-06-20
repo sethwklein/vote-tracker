@@ -3,20 +3,17 @@ if (!require('semver').satisfies(process.version, ">=6")) {
   process.exit(1);
 }
 
-const Boom = require('boom');
 const Hapi = require('hapi');
 const Inert = require('inert');
-const Path = require('path');
-const async = require('async');
+const fs = require('fs');
+const path = require('path');
 const pg = require('hapi-node-postgres');
-
-const councilorScraper = require('../shared/scrape-councilors');
 
 const server = new Hapi.Server({
   connections: {
     routes: {
       files: {
-        relativeTo: Path.join(__dirname, '../build'),
+        relativeTo: path.join(__dirname, '../build'),
       },
     },
   },
@@ -57,161 +54,18 @@ var routes = function(err) {
     throw err;
   }
 
-  server.route([
-    {
-      method: 'GET',
-      path: '/',
-      handler: function(req, reply) {
-        return reply.file('../build/index.html');
-      },
-    },
-    {
-      method: 'GET',
-      path: '/static/{param*}',
-      handler: {
-        directory: {
-          path: '.',
-          redirectToSlash: true,
-          index: true,
-        },
-      },
-    },
-    {
-      method: 'GET',
-      path: '/ping',
-      handler: function(req, reply) {
-        return reply({version: require('../package.json').version});
-      },
-    },
-    {
-      method: 'GET',
-      path: '/api/v1/councilor/{name?}',
-      handler: function(req, reply) {
-        var name = req.params.name;
-        if (name === "") {
-          name = undefined;
-        }
+  // Changing routes should not involve changing code here to lessen
+  // merge conflicts.
+  var routes = [];
+  var routesDir = path.join(__dirname, 'routes');
+  fs.readdirSync(routesDir).forEach(function(fn) {
+    if (!fn.endsWith(".js")) {
+      return;
+    }
+    routes.push(require(path.join(routesDir, fn)));
+  });
+  server.route(routes);
 
-        var start = function() {
-          return get();
-        };
-
-        var get = function() {
-          if (typeof name === 'undefined') {
-            return req.pg.client.query('SELECT name, role, cityPage FROM councilors', send);
-          } else {
-            return req.pg.client.query('SELECT name, role, cityPage FROM councilors WHERE name = $1', [name], send);
-          }
-        };
-
-        var send = function(err, result) {
-          if (err) {
-            return reply(Boom.serverUnavailable(err));
-          }
-
-          if (typeof name === 'undefined') {
-            return reply(result.rows);
-          }
-
-          if (result.rows.length < 1) {
-            return reply(Boom.notFound());
-          }
-
-          // is fussing about too many rows worth it?
-
-          return reply(result.rows[0]);
-        };
-
-        return start();
-      },
-    },
-    {
-      method: 'GET',
-      path: '/scrape',
-      handler: function(req, reply) {
-        var start = function() {
-          getCouncilorList();
-        };
-
-        var getCouncilorList = function() {
-          councilorScraper.scrapeCouncilorList(getAndStoreCouncilors);
-        };
-
-        // Try every councilor, reporting the ones that fail, but not
-        // aborting other councilor attempts if one fails.
-
-        var getAndStoreCouncilors = function(err, cityCMSIDS) {
-          if (err) {
-            return reply(Boom.wrap(err));
-          }
-
-          async.map(cityCMSIDS, async.reflect(getAndStoreCouncilor), sendReport);
-        };
-
-        var getAndStoreCouncilor = function(cityCMSID, callback) {
-          var start = function() {
-            scrapeCouncilor();
-          };
-
-          var scrapeCouncilor = function() {
-            councilorScraper.scrapeCouncilor(cityCMSID, updateCouncilor);
-          };
-
-          var councilor;
-
-          // Try an update, then an insert. It's less robust against
-          // parallelism, but fewer database requests in the common case.
-
-          var updateCouncilor = function(err, councilorArgument) {
-            if (err) {
-              return callback(Boom.wrap(err));
-            }
-
-            councilor = councilorArgument;
-
-            req.pg.client.query('UPDATE councilors SET name = $1, role = $2, cityPage = $3 WHERE cityCMSID = $4', [councilor.name, councilor.role, councilor.cityPage, councilor.cityCMSID], insertCouncilor);
-          };
-
-          var insertCouncilor = function(err, result) {
-            if (err) {
-              return callback(Boom.serverUnavailable(err));
-            }
-
-            if (result.rowCount > 0) {
-              return finishDatabase(null, result);
-            }
-
-            req.pg.client.query('INSERT INTO councilors (name, cityCMSID, role, cityPage) VALUES ($1, $2, $3, $4)', [councilor.name, councilor.cityCMSID, councilor.role, councilor.cityPage], finishDatabase);
-          };
-
-          var finishDatabase = function(err, result) {
-            if (err) {
-              return callback(Boom.serverUnavailable(err));
-            }
-
-            return callback(null, {
-                command: result.command,
-                rowCount: result.rowCount,
-                name: councilor.name,
-                cityCMSID: councilor.cityCMSID,
-              });
-          };
-
-          start();
-        };
-
-        var sendReport = function(err, report) {
-          if (err) {
-            return reply({error: err});
-          }
-
-          return reply(report);
-        };
-
-        start();
-      },
-    },
-  ]);
   server.start(report);
 };
 
