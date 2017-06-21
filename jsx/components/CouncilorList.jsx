@@ -31,9 +31,10 @@ const CouncilorList = props => {
 });
 
   var councilorComponents = councilors.map((councilor) => (
-    <Link to={`/councilor/${councilor.name}`} key={councilor.name} className="councilor__link">
+    <Link to={`/councilor/${councilor.slug}`} key={councilor.name} className="councilor__link">
       <Councilor
         name={councilor.name}
+        slug={councilor.slug}
         role={councilor.role}
         img='static/pious-placeholder.jpg'
       />
@@ -50,6 +51,7 @@ const CouncilorList = props => {
 CouncilorList.propTypes = {
   councilors: PropTypes.arrayOf(PropTypes.shape({
     name: PropTypes.string.isRequired,
+    slug: PropTypes.string.isRequired,
     role: PropTypes.string.isRequired,
     citypage: PropTypes.string,
   }))
