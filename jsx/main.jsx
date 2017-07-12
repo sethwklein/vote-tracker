@@ -8,6 +8,8 @@ import Footer from './components/Footer.jsx';
 import Home from './components/Home.jsx';
 import CouncilorDetail from './components/CouncilorDetail.jsx';
 
+import ScrollToTop from './components/ScrollToTop.jsx';
+
 function Application(props) {
 
   return (
@@ -16,8 +18,10 @@ function Application(props) {
       <div className="site">
         <Header page="homepage" title="Portland Maine Voting&nbsp;Record" />
         <div className="main">
-          <Route exact path="/" component={Home} />
-          <Route path="/councilor/:cid" component={CouncilorDetail} />
+          <ScrollToTop>
+            <Route exact path="/" component={Home} />
+            <Route path="/councilor/:cid" component={CouncilorDetail} />
+          </ScrollToTop>
         </div>
         <Footer />
       </div>

@@ -1,0 +1,27 @@
+.councilor-detail {
+  display: flex;
+  align-items: center;
+  &__photo {
+    width: 150px;
+    height: 150px;
+
+    // From .councilor__photo
+    border-radius: 50%;
+    overflow: hidden;
+    position: relative;
+
+    // New styles
+    margin: -25px 0 0;
+    border: 5px solid white;
+    text-align: center;
+
+  }
+  &__name {
+    font-weight: 600;
+    font-size: 32px;
+  }
+  &__role {
+    font-size: 24px;
+    color: #666;
+  }
+}

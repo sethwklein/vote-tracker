@@ -8,7 +8,7 @@ import OrderList from '../components/OrderList.jsx';
 const COUNCILORS = [
   {
     "name":"Justin Costa",
-    "slug":"Justin Costa",
+    "slug":"justin-costa",
     "role":"District 4",
     "citypage":"http://www.portlandmaine.gov"
   },

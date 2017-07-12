@@ -11,13 +11,13 @@ const Councilor = props => {
       </div>
     </div>
   );
-}
+};
 
 Councilor.propTypes = {
   name: PropTypes.string.isRequired,
   slug: PropTypes.string.isRequired,
   role: PropTypes.string.isRequired,
   img: PropTypes.string.isRequired,
-}
+};
 
 export default Councilor;
