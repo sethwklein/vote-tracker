@@ -1,6 +1,11 @@
 .councilor-detail {
   display: flex;
   align-items: center;
+  flex-direction: column;
+
+  @media screen and (min-width: 800px) {
+    flex-direction: row;
+  }
   &__photo {
     width: 150px;
     height: 150px;
@@ -15,6 +20,13 @@
     border: 5px solid white;
     text-align: center;
 
+  }
+  &__text {
+    text-align: center;
+
+    @media screen and (min-width: 800px) {
+      text-align: left;
+    }
   }
   &__name {
     font-weight: 600;
