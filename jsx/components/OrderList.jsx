@@ -28,11 +28,11 @@ const ORDERS = [
 
 const OrderList = props => {
   var orderComponents = ORDERS.slice(0,4).map(test => (
-          <Order
-            title={test.title}
-            text={test.text}
-            key={test.title}
-          />
+    <Order
+      title={test.title}
+      text={test.text}
+      key={test.title}
+    />
   ));
   return (
     <div className="orders">

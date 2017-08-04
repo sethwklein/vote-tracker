@@ -20,7 +20,7 @@ function Application(props) {
         <div className="main">
           <ScrollToTop>
             <Route exact path="/" component={Home} />
-            <Route path="/councilor/:cid" component={CouncilorDetail} />
+            <Route path="/councilors/:cid" component={CouncilorDetail} />
           </ScrollToTop>
         </div>
         <Footer />
