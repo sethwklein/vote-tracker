@@ -4,11 +4,12 @@ Voting-record is a web app for tracking Portland, Maine city council votes.
 
 ## Data sources
 
-Votes back as far as 1996 appear to be recorded in PDF's listed under City
+Votes back as far as 2014 appear to be recorded in PDF's listed under City
 Council on http://www.portlandmaine.gov/AgendaCenter
 
-Orders as far back as fiscal year 2012/2013 (FY 12/13) can be found in PDF's
-listed under City Council on http://www.portlandmaine.gov/DocumentCenter
+Some record of orders as far back as fiscal year 2012/2013 (FY 12/13) can
+be found in PDF's listed under City Council on
+http://www.portlandmaine.gov/DocumentCenter
 
 ## Contributing
 
