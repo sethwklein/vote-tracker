@@ -6,6 +6,7 @@ if (!require('semver').satisfies(process.version, ">=6")) {
 const Hapi = require('hapi');
 const Inert = require('inert');
 const fs = require('fs');
+const h2o2 = require('h2o2');
 const path = require('path');
 const pg = require('hapi-node-postgres');
 
@@ -36,8 +37,8 @@ var start = function() {
 
 var plugins = function() {
   server.register([
-    // inert
     Inert,
+    h2o2,
     // postgres
     {
       register: pg,

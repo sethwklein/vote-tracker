@@ -3,8 +3,10 @@
   "version": "0.0.0",
   "description": "Voting-record is a web app for recording Portland, Maine city council votes.",
   "dependencies": {
+    "aws-sdk": "^2.56.0",
     "boom": "^4.3.1",
     "cheerio": "^0.22.0",
+    "file-type": "^4.3.0",
     "hapi": "^16.1.1",
     "hapi-node-postgres": "^4.1.0",
     "inert": "^4.2.0",
@@ -26,6 +28,7 @@
     "gulp-babel": "^6.1.2",
     "gulp-sass": "^3.1.0",
     "gulp-sourcemaps": "^2.6.0",
+    "h2o2": "^5.4.0",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
     "vinyl-named": "^1.1.0",

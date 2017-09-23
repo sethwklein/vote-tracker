@@ -76,6 +76,8 @@ node server
 * See the `config` object in `gulpfile.js` for locations of the frontend files.
 * Database contents is in `db`. You can shut the database down and move that
     directory aside to start fresh.
+* S3 contents (files) are in `s3-minio`. You can shut minio (docker-compose)
+    down and move that directory aside to start fresh.
 
 ### Database
 

@@ -9,3 +9,16 @@ services:
       - 127.0.0.1:5432:5432
     # there's no state in this container so it could be deleted every
     # time, but docker compose doesn't support that.
+
+  s3:
+    image: minio/minio
+    volumes:
+      - ./s3-minio:/export
+    ports:
+      - 127.0.0.1:9000:9000
+    command: server /export
+    environment:
+        MINIO_ACCESS_KEY: local
+        MINIO_SECRET_KEY: access_only
+    # there's no state in this container so it could be deleted every
+    # time, but docker compose doesn't support that.
