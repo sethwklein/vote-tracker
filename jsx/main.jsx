@@ -10,6 +10,7 @@ import Footer from './components/Footer.jsx';
 import Home from './components/Home.jsx';
 import CouncilorDetail from './components/CouncilorDetail.jsx';
 import { fetchCouncilors } from './actions/councilor.jsx';
+import OrderInput from './components/OrderInput.jsx';
 
 import ScrollToTop from './components/ScrollToTop.jsx';
 
@@ -64,6 +65,7 @@ function Application(props) {
             <ScrollToTop>
               <Route exact path="/" component={Home} />
               <Route path="/councilors/:cid" component={CouncilorDetail} />
+              <Route path="/input" component={OrderInput} />
             </ScrollToTop>
           </div>
           <Footer />
