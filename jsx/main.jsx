@@ -60,17 +60,6 @@ store.subscribe(() => {
   console.log("Store changed", store.getState())
 });
 
-// store.dispatch((dispatch) => {
-//   dispatch({type: "FETCH_COUNCILORS_START"})
-//   axios.get('/api/v1/councilors/')
-//     .then((response) => {
-//       dispatch({ type: "RECEIVE_COUNCILORS", payload: response.data })
-//     })
-//     .catch((err) => {
-//       dispatch({ type: "FETCH_COUNCILORS_ERROR", payload: err })
-//     })
-// })
-
 function Application(props) {
 
   return (
