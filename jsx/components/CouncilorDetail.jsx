@@ -2,24 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import OrderList from '../components/OrderList.jsx';
 import { connect } from 'react-redux';
-
-function slugify(str) {
-    str = str.replace(/^\s+|\s+$/g, ''); // trim
-    str = str.toLowerCase();
-
-    // remove accents, swap ñ for n, etc
-    var from = "àáäâèéëêìíïîòóöôùúüûñç·/_,:;";
-    var to   = "aaaaeeeeiiiioooouuuunc------";
-    for (var i=0, l=from.length ; i<l ; i++) {
-        str = str.replace(new RegExp(from.charAt(i), 'g'), to.charAt(i));
-    }
-
-    str = str.replace(/[^a-z0-9 -]/g, '') // remove invalid chars
-        .replace(/\s+/g, '-') // collapse whitespace and replace by -
-        .replace(/-+/g, '-'); // collapse dashes
-
-    return str;
-}
+import Slugify from '../utils/slugify';
 
 class CouncilorDetail extends Component {
 
@@ -27,7 +10,7 @@ class CouncilorDetail extends Component {
     const id = this.props.match.params.cid;
 
     const councilor = this.props.info.councilor.councilors.find(councilor => {
-      const slug = slugify(councilor.name);
+      const slug = Slugify(councilor.name);
       if (slug == id) {
         return councilor;
       }
