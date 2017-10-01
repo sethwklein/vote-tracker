@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Councilor from '../components/Councilor.jsx';
+import CouncilorCard from '../components/CouncilorCard.jsx';
 import {BrowserRouter as Router, Link, Route} from 'react-router-dom';
+import store from '../main.jsx';
 
 // "District 2" -> 2, any thing else -> NaN (but that part is unused)
 function districtNumberFromRole(role) {
@@ -61,17 +62,35 @@ function establishRoleHierarchy(a, b) {
   return 0;
 }
 
+function slugify(str) {
+    str = str.replace(/^\s+|\s+$/g, ''); // trim
+    str = str.toLowerCase();
+
+    // remove accents, swap ñ for n, etc
+    var from = "àáäâèéëêìíïîòóöôùúüûñç·/_,:;";
+    var to   = "aaaaeeeeiiiioooouuuunc------";
+    for (var i=0, l=from.length ; i<l ; i++) {
+        str = str.replace(new RegExp(from.charAt(i), 'g'), to.charAt(i));
+    }
+
+    str = str.replace(/[^a-z0-9 -]/g, '') // remove invalid chars
+        .replace(/\s+/g, '-') // collapse whitespace and replace by -
+        .replace(/-+/g, '-'); // collapse dashes
+
+    return str;
+}
+
 const CouncilorList = props => {
   // This sorts alphabetically ...
   var councilors = props.councilors.sort(establishRoleHierarchy);
 
   var councilorComponents = councilors.map((councilor) => (
-    <Link to={`/councilors/${councilor.slug}`} key={councilor.name} className="councilor__link">
-      <Councilor
+    <Link to={`/councilors/${slugify(councilor.name)}`} key={councilor.name} className="councilor__link">
+      <CouncilorCard
         name={councilor.name}
-        slug={councilor.slug}
+        slug={slugify(councilor.name)}
         role={councilor.role}
-        img='static/pious-placeholder.jpg'
+        img={councilor.img}
       />
     </Link>
   ));
@@ -86,7 +105,6 @@ const CouncilorList = props => {
 CouncilorList.propTypes = {
   councilors: PropTypes.arrayOf(PropTypes.shape({
     name: PropTypes.string.isRequired,
-    slug: PropTypes.string.isRequired,
     role: PropTypes.string.isRequired,
     citypage: PropTypes.string,
   }))

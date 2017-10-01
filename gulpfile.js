@@ -68,6 +68,7 @@ gulp.task('jsx', function() {
               'syntax-jsx',
               'transform-react-jsx',
               'transform-react-display-name',
+              'transform-object-rest-spread',
             ],
           },
         }],
