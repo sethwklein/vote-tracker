@@ -1,22 +1,20 @@
-'use strict';
+const slugify = (str) => {
+  const from = 'àáäâèéëêìíïîòóöôùúüûñç·/_,:;';
+  const to = 'aaaaeeeeiiiioooouuuunc------';
 
-const Slugify = (str) => {
+  let newStr = str.replace(/^\s+|\s+$/g, ''); // trim
+  newStr = newStr.toLowerCase();
 
-    str = str.replace(/^\s+|\s+$/g, ''); // trim
-    str = str.toLowerCase();
+  // remove accents, swap ñ for n, etc
+  for (let i = 0, l = from.length; i < l; i += 1) {
+    newStr = newStr.replace(new RegExp(from.charAt(i), 'g'), to.charAt(i));
+  }
 
-    // remove accents, swap ñ for n, etc
-    var from = "àáäâèéëêìíïîòóöôùúüûñç·/_,:;";
-    var to   = "aaaaeeeeiiiioooouuuunc------";
-    for (var i=0, l=from.length ; i<l ; i++) {
-        str = str.replace(new RegExp(from.charAt(i), 'g'), to.charAt(i));
-    }
+  newStr = newStr.replace(/[^a-z0-9 -]/g, '') // remove invalid chars
+    .replace(/\s+/g, '-') // collapse whitespace and replace by -
+    .replace(/-+/g, '-'); // collapse dashes
 
-    str = str.replace(/[^a-z0-9 -]/g, '') // remove invalid chars
-        .replace(/\s+/g, '-') // collapse whitespace and replace by -
-        .replace(/-+/g, '-'); // collapse dashes
+  return newStr;
+};
 
-    return str;
-}
-
-module.exports = Slugify;
+module.exports = slugify;

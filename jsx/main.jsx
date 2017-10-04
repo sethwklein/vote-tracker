@@ -1,10 +1,9 @@
 import React from 'react';
 import ReactDom from 'react-dom';
 import PropTypes from 'prop-types';
-import {BrowserRouter as Router, Link, Route} from 'react-router-dom';
+import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
-import axios from 'axios';
 import { applyMiddleware, combineReducers, createStore } from 'redux';
 import Header from './components/Header.jsx';
 import Footer from './components/Footer.jsx';
@@ -15,10 +14,6 @@ import ScrollToTop from './components/ScrollToTop.jsx';
 
 const middleware = applyMiddleware(thunk);
 
-const userReducer = (state={}, action) => {
-  return state;
-}
-
 const initialState = {
   fetching: false,
   fetched: false,
@@ -26,55 +21,49 @@ const initialState = {
   error: null,
 };
 
-const councilorReducer = (state=initialState, action) => {
-  switch(action.type) {
-    case "FETCH_COUNCILORS_START": {
+const councilorReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case 'FETCH_COUNCILORS_START': {
       return { ...state, fetching: true };
-      break;
     }
-    case "FETCH_COUNCILORS_ERROR" : {
+    case 'FETCH_COUNCILORS_ERROR' : {
       return { ...state, fetching: false, error: action.payload };
-      break;
     }
-    case "RECEIVE_COUNCILORS" : {
+    case 'RECEIVE_COUNCILORS' : {
       return {
         ...state,
         fetching: false,
         fetched: true,
         councilors: action.payload,
-      }
-      break;
+      };
+    }
+    default: {
+      return state;
     }
   }
-  return state;
-}
+};
 
+// We're a little early here, but we may as well get ready.
 const reducers = combineReducers({
-  user: userReducer,
-  councilor: councilorReducer
-})
+  councilor: councilorReducer,
+});
 
 const store = createStore(reducers, middleware);
 
-store.subscribe(() => {
-  console.log("Store changed", store.getState())
-});
-
 function Application(props) {
-
   return (
     <Provider store={store}>
       <Router>
-      <div className="site">
-        <Header page="homepage" title="Portland Maine Voting&nbsp;Record" />
-        <div className="main">
-          <ScrollToTop>
-            <Route exact path="/" component={Home} />
-            <Route path="/councilors/:cid" component={CouncilorDetail} />
-          </ScrollToTop>
+        <div className="site">
+          <Header page="homepage" title="Portland Maine Voting&nbsp;Record" />
+          <div className="main">
+            <ScrollToTop>
+              <Route exact path="/" component={Home} />
+              <Route path="/councilors/:cid" component={CouncilorDetail} />
+            </ScrollToTop>
+          </div>
+          <Footer />
         </div>
-        <Footer />
-      </div>
       </Router>
     </Provider>
   );

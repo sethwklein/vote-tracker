@@ -3,17 +3,17 @@ import PropTypes from 'prop-types';
 import CouncilorCard from '../components/CouncilorCard.jsx';
 import {BrowserRouter as Router, Link, Route} from 'react-router-dom';
 import store from '../main.jsx';
-import Slugify from '../utils/slugify';
+import slugify from '../utils/slugify';
 
 // "District 2" -> 2, any thing else -> NaN (but that part is unused)
 function districtNumberFromRole(role) {
-  var i = role.lastIndexOf(" ");
+  const i = role.lastIndexOf(' ');
   if (i < 0) {
     return NaN;
   }
-  var s = role.slice(i+1);
+  const s = role.slice(i + 1);
   return parseInt(s, 10);
-};
+}
 
 // Use in sort function to put list councilors in a sensible hierarchy
 function establishRoleHierarchy(a, b) {
@@ -46,12 +46,12 @@ function establishRoleHierarchy(a, b) {
   }
 
   // sort the districts by the integer at the end
-  var aDistrict = districtNumberFromRole(a.role);
-  if (aDistrict === NaN) {
+  let aDistrict = districtNumberFromRole(a.role);
+  if (isNaN(aDistrict)) {
     aDistrict = 0; // put parse errors first? last? i don't know! --sk
   }
-  var bDistrict = districtNumberFromRole(b.role);
-  if (bDistrict === NaN) {
+  let bDistrict = districtNumberFromRole(b.role);
+  if (isNaN(bDistrict)) {
     bDistrict = 0; // put parse errors first? last? i don't know! --sk
   }
   if (aDistrict < bDistrict) {
@@ -63,15 +63,15 @@ function establishRoleHierarchy(a, b) {
   return 0;
 }
 
-const CouncilorList = props => {
+const CouncilorList = (props) => {
   // This sorts alphabetically ...
-  var councilors = props.councilors.sort(establishRoleHierarchy);
+  const councilors = props.councilors.sort(establishRoleHierarchy);
 
-  var councilorComponents = councilors.map((councilor) => (
-    <Link to={`/councilors/${Slugify(councilor.name)}`} key={councilor.name} className="councilor__link">
+  const councilorComponents = councilors.map(councilor => (
+    <Link to={`/councilors/${slugify(councilor.name)}`} key={councilor.name} className="councilor__link">
       <CouncilorCard
         name={councilor.name}
-        slug={Slugify(councilor.name)}
+        slug={slugify(councilor.name)}
         role={councilor.role}
         img={councilor.img}
       />
@@ -90,7 +90,7 @@ CouncilorList.propTypes = {
     name: PropTypes.string.isRequired,
     role: PropTypes.string.isRequired,
     citypage: PropTypes.string,
-  }))
-}
+  })).isRequired,
+};
 
 export default CouncilorList;
