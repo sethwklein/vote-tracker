@@ -4,14 +4,9 @@ import { connect } from 'react-redux';
 import Overview from '../components/Overview.jsx';
 import CouncilorList from '../components/CouncilorList.jsx';
 import OrderList from '../components/OrderList.jsx';
-import { fetchCouncilors } from '../actions/councilor.jsx';
 import store from '../main.jsx';
 
 class Home extends React.Component {
-
-  componentWillMount() {
-    this.props.dispatch(fetchCouncilors())
-  }
 
   render() {
 

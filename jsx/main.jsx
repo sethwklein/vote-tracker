@@ -9,6 +9,7 @@ import Header from './components/Header.jsx';
 import Footer from './components/Footer.jsx';
 import Home from './components/Home.jsx';
 import CouncilorDetail from './components/CouncilorDetail.jsx';
+import { fetchCouncilors } from './actions/councilor.jsx';
 
 import ScrollToTop from './components/ScrollToTop.jsx';
 
@@ -43,12 +44,15 @@ const councilorReducer = (state = initialState, action) => {
   }
 };
 
-// We're a little early here, but we may as well get ready.
+// We're a little early here since we only have one reducer, but we may as well get ready.
 const reducers = combineReducers({
   councilor: councilorReducer,
 });
 
 const store = createStore(reducers, middleware);
+
+// Let's load our councilors
+store.dispatch(fetchCouncilors());
 
 function Application(props) {
   return (
