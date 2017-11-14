@@ -10,6 +10,7 @@ const maps = require('gulp-sourcemaps');
 const named = require('vinyl-named');
 const sass = require('gulp-sass');
 const webpack = require('webpack-stream');
+const plumber = require('gulp-plumber');
 
 const build = './build'; // can't refer to it before it's defined
 
@@ -32,6 +33,7 @@ const config = {
 
 gulp.task('sass', function() {
   return gulp.src(config.sass)
+    .pipe(plumber())
     .pipe(sass({
       style: 'expanded',
       precision: 6,
@@ -48,6 +50,7 @@ gulp.task('sass', function() {
 
 gulp.task('jsx', function() {
   return gulp.src(config.jsx)
+    .pipe(plumber())
     .pipe(named())
     .pipe(webpack({
       module: {
@@ -68,6 +71,7 @@ gulp.task('jsx', function() {
               'syntax-jsx',
               'transform-react-jsx',
               'transform-react-display-name',
+              'transform-object-rest-spread',
             ],
           },
         }],

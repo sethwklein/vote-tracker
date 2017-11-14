@@ -1,16 +1,22 @@
 .councilors {
-  display: flex;
-  flex-wrap: wrap;
-  margin: 0 -10px;
+  display: block;
+  @media (min-width: 500px) {
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @media (min-width: 780px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 
 .councilor {
   display: flex;
-  margin: 10px;
   align-items: center;
+  padding: 10px;
 
   &__link {
-    flex: 1 200px;
+    display: block;
     text-decoration: none;
 
     &:hover {
@@ -29,10 +35,10 @@
     height: 100px;
     overflow: hidden;
     position: relative;
+    flex: 0 0 auto;
   }
 
   &__details {
     margin-left: 10px;
-    flex: 1;
   }
 }
