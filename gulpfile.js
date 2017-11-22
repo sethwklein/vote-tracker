@@ -53,6 +53,10 @@ gulp.task('jsx', function() {
     .pipe(plumber())
     .pipe(named())
     .pipe(webpack({
+      output: {
+        publicPath: "/static/",
+        pathinfo: true,
+      },
       module: {
         loaders: [{
           loader: "babel",
