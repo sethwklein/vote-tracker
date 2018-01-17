@@ -11,7 +11,6 @@ import Home from './components/Home.jsx';
 import CouncilorDetail from './components/CouncilorDetail.jsx';
 import { fetchCouncilors } from './actions/councilor.jsx';
 import OrderInput from './components/OrderInput.jsx';
-
 import ScrollToTop from './components/ScrollToTop.jsx';
 
 const middleware = applyMiddleware(thunk);
