@@ -50,3 +50,14 @@ a {
 .no-underline {
   text-decoration: none;
 }
+
+form {
+  margin: 0 auto;
+  max-width: 400px;
+}
+
+input,
+textarea {
+  display: block;
+  width: 100%;
+}
