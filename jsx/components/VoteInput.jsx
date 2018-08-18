@@ -12,6 +12,7 @@ class VoteInput extends Component {
 
         super(props);
         this.setVoteValue = this._setVoteValue.bind(this);
+        this.setVoteUnanimous = this._setVoteUnanimous.bind(this);
     }
 
     _setVoteValue(e, councilor) {
@@ -20,29 +21,30 @@ class VoteInput extends Component {
         this.props.onUpdateVote(value, councilor);
     }
 
+    _setVoteUnanimous(councilors) {
+
+        councilors.forEach((councilor) => this.props.onUpdateVote('yes', slugify(councilor.name)))
+    }
+
     render() {
 
         const councilors = this.props.councilors.sort(establishRoleHierarchy);
 
-        return (
-            <div>
-                <h1>Votes</h1><a>Mark Unanimous Vote</a>
-                {
-                    // First pass using a single entry
-                }
+        const voteComponents = councilors.map(councilor => (
+            <div className='voteInput'>
                 <CouncilorCard
                     condensed
-                    name={councilors[0].name}
-                    slug={slugify(councilors[0].name)}
-                    role={councilors[0].role}
-                    img={councilors[0].img}
+                    name={councilor.name}
+                    slug={slugify(councilor.name)}
+                    role={councilor.role}
+                    img={councilor.img}
                 />
                 <select 
                     value={
-                        this.props.votes.find((vote) => vote.councilor === slugify(councilors[0].name))
-                        && this.props.votes.find((vote) => vote.councilor === slugify(councilors[0].name)).vote|| ''
+                        this.props.votes.find((vote) => vote.councilor === slugify(councilor.name))
+                        && this.props.votes.find((vote) => vote.councilor === slugify(councilor.name)).vote|| ''
                     }
-                    onChange={ (e) => this.setVoteValue(e, slugify(councilors[0].name))} 
+                    onChange={ (e) => this.setVoteValue(e, slugify(councilor.name))} 
                 >
                     <option value='' disabled selected>Vote</option>
                     <option value='yes'>Yes</option>
@@ -50,6 +52,14 @@ class VoteInput extends Component {
                     <option value='absent'>Absent</option>
                     <option value='abstain'>Abstain</option>
                 </select>
+            </div>
+  ));
+
+        return (
+            <div>
+                <h1>Votes</h1><a onClick={() => this.setVoteUnanimous(councilors)}>Mark Unanimous Vote</a>
+                {voteComponents}
+
             </div>
         )
     }

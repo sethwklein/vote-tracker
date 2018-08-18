@@ -12,26 +12,26 @@ class OrderInputFields extends Component {
         super(props);
 
         this.state = {
-          name: null,
-          inputs: [
-            {
-              // We should have some kind of id or unique name for key, too
-              // If Order Name, have example like 154-17/18
-              type: 'text',
-              label: 'Order Name',
-              value: '',
-            },
-            {
-              type: 'textarea',
-              label: 'Description',
-              value: '',
-            },
-            {
-              type: 'url',
-              label: 'Order PDF URL',
-              value: '',
-            },
-          ],
+          id: '',
+          // inputs: [
+          //   {
+          //     // We should have some kind of id or unique name for key, too
+          //     // If Order Name, have example like 154-17/18
+          //     type: 'text',
+          //     label: 'Order Name',
+          //     value: '',
+          //   },
+          //   {
+          //     type: 'textarea',
+          //     label: 'Description',
+          //     value: '',
+          //   },
+          //   {
+          //     type: 'url',
+          //     label: 'Order PDF URL',
+          //     value: '',
+          //   },
+          // ],
           votes: [
             {
               councilor: 'belinda-s-ray',
@@ -48,7 +48,8 @@ class OrderInputFields extends Component {
           ],
         }
 
-        this.onUpdateVote = this._onUpdateVote.bind(this);
+        this.handleUpdateVote = this._handleUpdateVote.bind(this);
+        this.updateInput = this._updateInput.bind(this);
   }
 
   componentDidMount() {
@@ -57,12 +58,23 @@ class OrderInputFields extends Component {
     console.log(this.props.info);
   };
 
-  _onUpdateVote(value, councilor) {
+  _updateInput(e, field) {
+    const value = e.target.value
+
+    this.setState(() => ({
+      [field]: value
+    }))
+  }
+
+  _handleUpdateVote(value, councilor) {
+
+    console.log(`We have ${value} for ${councilor}`);
 
     this.setState((currentState) => {
+      console.log(currentState.votes.filter((vote) => vote.councilor !== councilor ));
       return {
         votes: [
-          currentState.votes.filter((vote) => vote.councilor !== councilor ),
+          ...currentState.votes.filter((vote) => vote.councilor !== councilor ),
           {
             councilor: councilor,
             vote: value
@@ -78,20 +90,40 @@ class OrderInputFields extends Component {
       <div className="orderFields">
         <form action="#">
           <h1>Details</h1>
-          <label htmlFor="name">Order Name</label>
           {
             // Each of these inputs should be in state as an array of objects we can add to
             // Type, Label, Value
-          }
-          <input name='name' type="text" placeholder="154-17/18" defaultValue={this.props.name} />
-          <input type="url" placeholder="Order PDF URL" defaultValue={this.props.url}/>
-          <textarea cols="30" rows="10" placeholder="Order Description" defaultValue={this.props.description}></textarea>
+            // Possible types: Text, Textarea (rename for clarity), URL, Date, Number?
+            // Maybe a "Need a custom field type? Suggest a feature to the developers."
+            // We should think about what to do for Proclamations too, not just orders
+            // Maybe just a toggle switch?
 
-          {
-            // Here down should be a separate VoteInput container that 
           }
-          <VoteInput votes={this.state.votes} onUpdateVote={this.onUpdateVote} councilors={this.props.info.councilor.councilors}/>
-          
+
+          <div className='diptych'>
+
+            <div className='inputContainer'>
+              <label htmlFor="name">Order ID</label>
+              <input name='name' type="text" placeholder="154-17/18" value={this.props.id} onChange={(e) => this.updateInput(e, 'id')} />
+            </div>
+
+            <div className='inputContainer'>
+              <label htmlFor="date-of-vote">Date Of Vote</label>
+              <input name='date-of-vote' type="date" />
+            </div>
+
+          </div>
+
+          <label htmlFor="short-description">Order Name</label>
+          <input name='short-description' placeholder="Order Appointing Members to Various Boards and Committees" />
+
+          <label htmlFor="url">Order PDF URL</label>
+          <input name='url' type="url" placeholder="http://www.portlandmaine.gov/AgendaCenter/ViewFile/Item/5877?fileID=29791" defaultValue={this.props.url}/>
+
+          <label htmlFor="description">Order Description</label>
+          <textarea name='description' cols="30" rows="10" placeholder="Order Description" defaultValue={this.props.description}></textarea>
+
+          <VoteInput votes={this.state.votes} onUpdateVote={this.handleUpdateVote} councilors={this.props.info.councilor.councilors}/>
 
           <input type="submit" value="Submit"/>
         </form>
@@ -101,9 +133,9 @@ class OrderInputFields extends Component {
   }
 }
 
-OrderInputFields.defaultProps = {
-  name: '154-17/18',
-};
+// OrderInputFields.defaultProps = {
+//   // name: '154-17/18',
+// };
 
 // For the time being, we'll pull the list of councilors from state.
 // Ultimately, we'll need to associate an order with the councilors who were active when it was voted on

@@ -15,6 +15,13 @@
   align-items: center;
   padding: 10px;
 
+  &--condensed {
+    .councilor__photo {
+      width: 50px;
+      height: 50px;
+    }
+  }
+
   &__link {
     display: block;
     text-decoration: none;
