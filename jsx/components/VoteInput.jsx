@@ -53,7 +53,7 @@ class VoteInput extends Component {
                     <option value='abstain'>Abstain</option>
                 </select>
             </div>
-  ));
+        ));
 
         return (
             <div>
