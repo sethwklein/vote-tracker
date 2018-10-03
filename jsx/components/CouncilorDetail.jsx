@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import OrderList from '../components/OrderList.jsx';
 import { connect } from 'react-redux';
 import slugify from '../utils/slugify';
+import { Redirect } from 'react-router-dom';
 
 class CouncilorDetail extends Component {
   render() {
@@ -16,6 +17,10 @@ class CouncilorDetail extends Component {
       const slug = slugify(a.name);
       return (slug === cid);
     });
+
+    if (!councilor) {
+      return <Redirect to="/404" push={true} />
+    }
 
     return (
       <div>

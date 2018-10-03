@@ -1,12 +1,13 @@
 import React from 'react';
 import ReactDom from 'react-dom';
 import PropTypes from 'prop-types';
-import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Link, Route, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import { applyMiddleware, combineReducers, createStore } from 'redux';
 import Header from './components/Header.jsx';
 import Footer from './components/Footer.jsx';
+import NoMatch from './components/NoMatch.jsx';
 import Home from './components/Home.jsx';
 import CouncilorDetail from './components/CouncilorDetail.jsx';
 import { fetchCouncilors } from './actions/councilor.jsx';
@@ -62,9 +63,12 @@ function Application(props) {
           <Header page="homepage" title="Portland Maine Voting&nbsp;Record" />
           <div className="main">
             <ScrollToTop>
-              <Route exact path="/" component={Home} />
-              <Route path="/councilors/:cid" component={CouncilorDetail} />
-              <Route path="/input" component={OrderInput} />
+              <Switch>
+                <Route exact path="/" component={Home} />
+                <Route path="/councilors/:cid" component={CouncilorDetail} />
+                <Route path="/input" component={OrderInput} />
+                <Route component={NoMatch} />
+              </Switch>
             </ScrollToTop>
           </div>
           <Footer />

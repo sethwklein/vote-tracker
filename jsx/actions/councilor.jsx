@@ -2,7 +2,6 @@ import * as CouncilorActionTypes from '../actiontypes/councilor.jsx';
 import axios from 'axios';
 
 export const fetchCouncilors = () => {
-    console.log("In fetchCouncilors");
   return function(dispatch) {
     axios.get('/api/v1/councilors/')
       .then((response) => {
