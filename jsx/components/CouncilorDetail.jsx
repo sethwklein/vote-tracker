@@ -8,12 +8,13 @@ class CouncilorDetail extends Component {
   render() {
     const { cid } = this.props.match.params;
 
+    if (!this.props.info.councilor.fetched || this.props.info.councilor.fetching) {
+      return <p>Loading…</p>;
+    }
+
     const councilor = this.props.info.councilor.councilors.find((a) => {
       const slug = slugify(a.name);
-      if (slug === cid) {
-        return a;
-      }
-      return null;
+      return (slug === cid);
     });
 
     return (
