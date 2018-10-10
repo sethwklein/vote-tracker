@@ -4,6 +4,7 @@ import OrderList from '../components/OrderList.jsx';
 import { connect } from 'react-redux';
 import slugify from '../utils/slugify';
 import { Redirect } from 'react-router-dom';
+import NoMatch from '../components/NoMatch.jsx'
 
 class CouncilorDetail extends Component {
   render() {
@@ -19,7 +20,7 @@ class CouncilorDetail extends Component {
     });
 
     if (!councilor) {
-      return <Redirect to="/404" push={true} />
+      return <NoMatch />
     }
 
     return (
