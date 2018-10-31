@@ -3,18 +3,25 @@ import PropTypes from 'prop-types';
 import OrderList from '../components/OrderList.jsx';
 import { connect } from 'react-redux';
 import slugify from '../utils/slugify';
+import { Redirect } from 'react-router-dom';
+import NoMatch from '../components/NoMatch.jsx'
 
 class CouncilorDetail extends Component {
   render() {
     const { cid } = this.props.match.params;
 
+    if (!this.props.info.councilor.fetched || this.props.info.councilor.fetching) {
+      return <p>Loading…</p>;
+    }
+
     const councilor = this.props.info.councilor.councilors.find((a) => {
       const slug = slugify(a.name);
-      if (slug === cid) {
-        return a;
-      }
-      return null;
+      return (slug === cid);
     });
+
+    if (!councilor) {
+      return <NoMatch />
+    }
 
     return (
       <div>
